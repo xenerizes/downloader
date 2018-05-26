@@ -2,5 +2,5 @@
 
 class Logger {
 public:
-    void write(const std::string& data);
+    void write(const char* data);
 };
