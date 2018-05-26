@@ -1,8 +1,12 @@
 #pragma once
 
+#include "Url.hh"
+#include "Client.hh"
 
 struct Settings {
-    std::string path_;
+    Url url;
+    ClientPtr client;
+    std::string filename;
 };
 
 
