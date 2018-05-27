@@ -2,5 +2,5 @@
 
 class Logger {
 public:
-    void write(const char* data);
+    void error(const char* data);
 };

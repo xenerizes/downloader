@@ -13,7 +13,7 @@ int main(int argc, char** argv) {
         auto&& settings = parser.parse_args(argc, argv);
         app.run(settings);
     } catch (const std::exception& err) {
-        log.write(err.what());
+        log.error(err.what());
         return 1;
     }
 
