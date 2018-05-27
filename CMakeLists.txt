@@ -6,14 +6,16 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include_directories(include)
 
-file(GLOB_RECURSE APP_SRC src/application/*.cpp)
-add_library(app ${APP_SRC})
+file(GLOB_RECURSE CLI_SRC src/cli/*.cpp)
+add_library(cli ${CLI_SRC})
 
-file(GLOB_RECURSE LDR_SRC src/loader/*.cpp)
-#add_library(loader ${LDR_SRC})
+file(GLOB_RECURSE LIB_SRC src/lib/*.cpp)
+add_library(lib ${LIB_SRC})
 
-file(GLOB_RECURSE WRT_SRC src/writer/*.cpp)
-#add_library(writer ${WRT_SRC})
+add_executable(downloader-cli src/cli/main.cpp)
+target_link_libraries(downloader-cli lib cli)
 
-add_executable(downloader src/main.cpp)
-target_link_libraries(downloader app)
+# Tests
+add_executable(downloader-test test/main.cpp)
+target_link_libraries(downloader-test gtest)
+add_subdirectory(third-party/googletest)
