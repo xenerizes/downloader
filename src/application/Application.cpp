@@ -1,7 +1,7 @@
-#include "Application.hh"
-#include "Settings.hh"
-#include "Loader.hh"
-#include "Writer.hh"
+#include "application/Application.hh"
+#include "application/Settings.hh"
+#include "client/Loader.hh"
+#include "writer/Writer.hh"
 
 
 void Application::run(const Settings& settings)

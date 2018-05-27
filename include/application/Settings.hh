@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Url.hh"
-#include "Client.hh"
+#include "client/Url.hh"
+#include "client/Client.hh"
 
 struct Settings {
     Url url;
