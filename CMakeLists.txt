@@ -18,4 +18,6 @@ target_link_libraries(downloader-cli lib cli)
 # Tests
 add_executable(downloader-test test/main.cpp)
 target_link_libraries(downloader-test gtest)
+target_include_directories(downloader-test PRIVATE
+    third-party/googletest/googletest/include)
 add_subdirectory(third-party/googletest)
