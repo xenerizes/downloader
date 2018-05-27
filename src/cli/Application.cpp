@@ -1,5 +1,5 @@
-#include "application/Application.hh"
-#include "application/Settings.hh"
+#include "cli/Application.hh"
+#include "cli/Settings.hh"
 #include "client/Loader.hh"
 #include "writer/Writer.hh"
 

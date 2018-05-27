@@ -1,6 +1,6 @@
-#include "application/Application.hh"
-#include "application/Settings.hh"
-#include "application/Logger.hh"
+#include "cli/Application.hh"
+#include "cli/Settings.hh"
+#include "cli/Logger.hh"
 
 #include <exception>
 
