@@ -19,3 +19,5 @@ private:
 
     void make_connection();
 };
+
+using SocketPtr = std::unique_ptr<Socket>;

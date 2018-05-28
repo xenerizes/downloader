@@ -7,10 +7,10 @@
 
 class HttpClient: public Client {
 public:
+    HttpClient() noexcept = default;
+
     Data download(const Url& url) override;
 
 private:
-    Socket socket_;
-
-
+    SocketPtr socket_;
 };
