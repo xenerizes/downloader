@@ -7,7 +7,6 @@
 struct Settings {
     Url url;
     ClientPtr client;
-    std::string filename;
 };
 
 

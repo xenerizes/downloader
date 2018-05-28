@@ -5,6 +5,4 @@
 #include <string>
 
 
-Writer::Writer(std::string filename) { }
-
 void Writer::write(const Data& data) { }

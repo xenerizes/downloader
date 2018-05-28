@@ -14,12 +14,10 @@ Settings ArgumentParser::parse_args(int argc, char** argv)
     if (argc > 1) {
         UrlParser parser;
         settings.url = parser.parse(argv[1]);
-        settings.filename = settings.url.filename;
     } else {
         throw std::invalid_argument("Wrong number of arguments");
     }
 
-    settings.filename = settings.url.filename;
     settings.client = std::make_unique<HttpClient>();
 
     return settings;
