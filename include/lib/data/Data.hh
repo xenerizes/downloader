@@ -6,6 +6,9 @@
 
 class Data {
 public:
+    Data() noexcept = default;
+    Data(const std::string& data);
+
     void append(const Buffer& buf);
 
     const char* access() const;
