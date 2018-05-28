@@ -28,7 +28,7 @@ public:
         listen_();
     }
 
-    void accept_(const Data& reply) {
+    void accept_(const Buffer& reply) {
         accept_descr_ = accept(listen_descr_, NULL, NULL);
 
         ssize_t byte_count = 0;
@@ -38,7 +38,7 @@ public:
                               (void*) buf.data(),
                               buf.size(),
                               RECV_FLAGS);
-            send(accept_descr_, reply.access(), reply.size(), SEND_FLAGS);
+            send(accept_descr_, reply.data(), reply.size(), SEND_FLAGS);
         } while (byte_count > 0);
 
         close(accept_descr_);
