@@ -1,9 +1,11 @@
 #pragma once
 
+#include <string>
+
 
 struct Url {
-    const char* path {nullptr};
-    const char* hostname {nullptr};
-    const char* filename {nullptr};
+    std::string path;
+    std::string hostname;
+    std::string filename;
     int port {0};
 };

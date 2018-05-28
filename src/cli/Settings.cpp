@@ -11,14 +11,12 @@ Settings ArgumentParser::parse_args(int argc, char** argv)
 {
     Settings settings;
 
-    switch (argc) {
-        case 2:
-            UrlParser parser;
-            settings.url = parser.parse(argv[1]);
-            settings.filename = settings.url.filename;
-            break;
-        default:
-            throw std::invalid_argument("Wrong number of arguments");
+    if (argc > 1) {
+        UrlParser parser;
+        settings.url = parser.parse(argv[1]);
+        settings.filename = settings.url.filename;
+    } else {
+        throw std::invalid_argument("Wrong number of arguments");
     }
 
     settings.filename = settings.url.filename;

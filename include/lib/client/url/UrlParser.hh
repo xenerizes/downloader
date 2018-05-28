@@ -7,5 +7,5 @@ class UrlParser {
 public:
     UrlParser() noexcept = default;
 
-    Url parse(const char* url);
+    Url parse(std::string url);
 };

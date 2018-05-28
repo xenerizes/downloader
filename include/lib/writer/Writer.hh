@@ -1,5 +1,10 @@
 #pragma once
 
+#include "lib/Data.hh"
+
+#include <string>
+
+
 class Writer {
 public:
     Writer(std::string filename);

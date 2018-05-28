@@ -8,7 +8,7 @@
 
 class HttpClient: public Client {
 public:
-    virtual Data download(const Url& url) override;
+    Data download(const Url& url) override;
 
 private:
     Socket socket_;

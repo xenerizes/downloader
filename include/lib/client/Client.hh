@@ -1,6 +1,9 @@
 #pragma once
 
+#include "lib/Data.hh"
+
 #include <memory>
+
 
 class Client {
 public:
