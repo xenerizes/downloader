@@ -49,6 +49,6 @@ void Socket::send_data(const Buffer& data)
 Buffer Socket::read_data()
 {
     Buffer buf;
-    recv(descr_, buf.data(), buf.max_size(), RECV_FLAGS);
+    recv(descr_, buf.data(), BUFFER_SIZE, RECV_FLAGS);
     return buf;
 }
