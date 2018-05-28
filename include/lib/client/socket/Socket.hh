@@ -6,8 +6,16 @@
 
 class Socket {
 public:
-    Data request(const Data& req);
+    Socket(const std::string& hostname, int port);
+    ~Socket();
+
+    void send_data(const Buffer& data);
+    Buffer read_data();
 
 private:
     int descr_;
+    const std::string host_;
+    int port_;
+
+    void make_connection();
 };
