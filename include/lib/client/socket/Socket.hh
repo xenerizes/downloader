@@ -6,10 +6,7 @@
 
 class Socket {
 public:
-    void connect();
-    void close();
-
-    Data send(const Data& req);
+    Data request(const Data& req);
 
 private:
     int descr_;
