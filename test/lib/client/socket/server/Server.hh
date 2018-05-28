@@ -36,7 +36,7 @@ public:
         do {
             byte_count = recv(accept_descr_,
                               (void*) buf.data(),
-                              buf.size(),
+                              buf.max_size(),
                               RECV_FLAGS);
             send(accept_descr_, reply.data(), reply.size(), SEND_FLAGS);
         } while (byte_count > 0);
