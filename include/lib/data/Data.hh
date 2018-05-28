@@ -9,9 +9,11 @@ public:
     Data() noexcept = default;
     Data(const std::string& data);
 
-    void append(const Buffer& buf);
-
+    std::string filename() const;
     const char* access() const;
+    size_t size() const;
+
+    void append(const Buffer& buf);
 
 private:
     std::vector<char> data_;
