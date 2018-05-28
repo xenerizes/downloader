@@ -1,11 +1,8 @@
 #include "lib/data/Data.hh"
 
-Data::Data(const std::string& data)
-{
-    data_.assign(data.begin(), data.end());
-}
+Data::Data(std::string filename) : filename_(std::move(filename)) { }
 
-std::string Data::filename() const { return "empty"; }
+std::string Data::filename() const { return filename_; }
 
 size_t Data::size() const { return data_.size(); }
 

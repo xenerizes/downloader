@@ -7,7 +7,7 @@
 class Data {
 public:
     Data() noexcept = default;
-    Data(const std::string& data);
+    Data(std::string filename);
 
     std::string filename() const;
     const char* access() const;
@@ -17,4 +17,5 @@ public:
 
 private:
     std::vector<char> data_;
+    std::string filename_;
 };
