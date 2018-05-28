@@ -15,7 +15,7 @@ TEST(Socket, SendAndReceiveMessage) {
         server.accept_(message);
     }
     if (pid > 0) {
-        Socket client_socket("localhost", BIND_PORT);
+        Socket client_socket("localhost", "6323");
         Buffer request = {"Hello"};
         client_socket.send_data(request);
 

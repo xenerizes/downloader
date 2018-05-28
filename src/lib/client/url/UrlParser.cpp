@@ -50,5 +50,5 @@ Url UrlParser::parse(std::string url_str)
     auto&& hostname = util::extract_hostname(url_str, "http");
     return Url { std::move(url_str),
                  hostname,
-                 80 };
+                 "80" };
 }

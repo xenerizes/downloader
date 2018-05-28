@@ -15,7 +15,7 @@ TEST(UrlParser, ParseValidUrl) {
 
     ASSERT_STREQ(url_str, url.path.c_str());
     ASSERT_STREQ("tools.ietf.org", url.hostname.c_str());
-    ASSERT_EQ(80, url.port);
+    ASSERT_EQ("80", url.port);
 }
 
 TEST(UrlParser, ParseInvalidUrl) {
@@ -46,7 +46,7 @@ TEST(UrlParser, ParseSite) {
 
     ASSERT_STREQ(url_str, url.path.c_str());
     ASSERT_STREQ("tools.ietf.org", url.hostname.c_str());
-    ASSERT_EQ(80, url.port);
+    ASSERT_EQ("80", url.port);
 }
 
 }

@@ -6,5 +6,5 @@
 struct Url {
     std::string path;
     std::string hostname;
-    int port {0};
+    std::string port;
 };

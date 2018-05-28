@@ -2,11 +2,12 @@
 
 #include "lib/client/url/Url.hh"
 #include "lib/data/Data.hh"
+#include "AddrInfo.hh"
 
 
 class Socket {
 public:
-    Socket(const std::string& hostname, int port);
+    Socket(std::string hostname, std::string port);
     ~Socket();
 
     void send_data(const Buffer& data);
@@ -15,7 +16,8 @@ public:
 private:
     int descr_;
     const std::string host_;
-    int port_;
+    std::string port_;
+    AddrInfo info_;
 
     void make_connection();
 };
