@@ -1,6 +1,6 @@
 #pragma once
 
-#include "lib/Data.hh"
+#include "lib/data/Data.hh"
 
 #include <memory>
 

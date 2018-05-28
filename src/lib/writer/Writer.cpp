@@ -1,7 +1,5 @@
 #include "lib/writer/Writer.hh"
 
-#include "lib/Data.hh"
-
 #include <string>
 
 
