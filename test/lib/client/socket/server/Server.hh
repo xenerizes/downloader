@@ -28,7 +28,22 @@ public:
         listen_();
     }
 
-    void run() { accept_(); }
+    void accept_(const Data& reply) {
+        accept_descr_ = accept(listen_descr_, NULL, NULL);
+
+        ssize_t byte_count = 0;
+        Buffer buf;
+        do {
+            byte_count = recv(accept_descr_,
+                              (void*) buf.data(),
+                              buf.size(),
+                              RECV_FLAGS);
+            send(accept_descr_, reply.access(), reply.size(), SEND_FLAGS);
+        } while (byte_count > 0);
+
+        close(accept_descr_);
+        close(listen_descr_);
+    }
 
 private:
     int listen_descr_;
@@ -51,22 +66,5 @@ private:
         }
 
         listen(listen_descr_, CONNECTIONS);
-    }
-
-    void accept_() {
-        accept_descr_ = accept(listen_descr_, NULL, NULL);
-
-        ssize_t byte_count = 0;
-        Buffer buf;
-        do {
-            byte_count = recv(accept_descr_,
-                              (void*) buf.data(),
-                              buf.size(),
-                              RECV_FLAGS);
-            send(accept_descr_, buf.data(), byte_count, SEND_FLAGS);
-        } while (byte_count > 0);
-
-        close(accept_descr_);
-        close(listen_descr_);
     }
 };
