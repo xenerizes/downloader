@@ -3,7 +3,7 @@
 #include "lib/client/socket/Socket.hh"
 #include "lib/client/url/Url.hh"
 #include "lib/client/Client.hh"
-#include "lib/client/http/header/HttpHeader.hh"
+#include "HttpHeader.hh"
 
 
 class HttpClient: public Client {
