@@ -1,27 +1,22 @@
 #include "lib/client/url/UrlParser.hh"
 
-#include <stdexcept>
 #include <cstring>
-
 
 constexpr const char* DEFAULT_PORT = "80";
 constexpr const char* SCHEME_DELIM = "://";
 constexpr const char* SLASH_DELIM = "/";
 constexpr const char* COLON_DELIM = ":";
+constexpr const char* HTML_EXTENSION = ".html";
+
 
 bool UrlParser::starts_with(const std::string& prefix) {
-    if (url_str_.size() - idx_ < prefix.size()) {
-        return false;
-    }
+    if (url_str_.size() - idx_ < prefix.size()) return false;
 
     for (size_t i = 0; i < prefix.size(); ++i) {
-        if (url_str_[i + idx_] != prefix[i]) {
-            return false;
-        }
+        if (url_str_[i + idx_] != prefix[i]) return false;
     }
 
     return true;
-
 }
 
 Scheme UrlParser::extract_scheme()
@@ -58,10 +53,7 @@ std::string UrlParser::extract_hostname() {
 
 std::string UrlParser::extract_port()
 {
-    if (idx_ == url_str_.size() or
-        starts_with(SLASH_DELIM) or
-        !starts_with(COLON_DELIM)) {
-
+    if (idx_ == url_str_.size() or starts_with(SLASH_DELIM) or !starts_with(COLON_DELIM)) {
         return DEFAULT_PORT;
     }
 
@@ -71,31 +63,29 @@ std::string UrlParser::extract_port()
     idx_ = port_end == std::string::npos ? url_str_.size() : port_end;
 
     auto result = url_str_.substr(port_start, port_end - port_start);
-    if (result == "") {
-        throw std::invalid_argument("Bad URL format: unexpected port");
-    }
+    if (result == "") throw std::invalid_argument("Bad URL format: unexpected port");
 
     return result;
 }
 
 std::string UrlParser::extract_path()
 {
-    if (!starts_with(SLASH_DELIM)) {
-        return SLASH_DELIM;
-    }
+    if (!starts_with(SLASH_DELIM)) return SLASH_DELIM;
 
     return url_str_.substr(idx_);
 }
 
-UrlParser::UrlParser(std::string url_str)
-    : url_str_(std::move(url_str))
-    , idx_(0)
-{ }
+std::string UrlParser::extract_filename()
+{
+    auto delim_pos = url_str_.rfind(SLASH_DELIM);
+    if (delim_pos < idx_) return url_str_.substr(delim_pos) + HTML_EXTENSION;
+    return url_str_.substr(delim_pos);
+}
+
+UrlParser::UrlParser(std::string url_str) : url_str_(std::move(url_str)) { }
 
 Url UrlParser::parse()
 {
-    return Url { extract_scheme(),
-                 extract_hostname(),
-                 extract_port(),
-                 extract_path() };
+    return Url { extract_scheme(), extract_hostname(), extract_port(),
+                 extract_path(), extract_filename() };
 }
