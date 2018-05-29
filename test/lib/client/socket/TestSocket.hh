@@ -8,7 +8,8 @@
 
 TEST(Socket, SendAndReceiveMessage) {
     Server server;
-    Buffer message = { "Privet!" };
+    Buffer message;
+    message.append("Privet!");
 
     auto pid = fork();
     if (pid == 0 ) {
@@ -16,10 +17,11 @@ TEST(Socket, SendAndReceiveMessage) {
     }
     if (pid > 0) {
         Socket client_socket("localhost", "6323");
-        Buffer request = {"Hello"};
+        Buffer request;
+        request.append("Hello");
         client_socket.send_data(request);
 
         auto received = client_socket.read_data();
-        ASSERT_EQ(message, received);
+        ASSERT_STREQ(message.data(), received.data());
     }
 }
