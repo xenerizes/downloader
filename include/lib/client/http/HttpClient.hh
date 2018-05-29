@@ -3,14 +3,16 @@
 #include "lib/client/socket/Socket.hh"
 #include "lib/client/url/Url.hh"
 #include "lib/client/Client.hh"
+#include "lib/client/http/header/HttpHeader.hh"
 
 
 class HttpClient: public Client {
 public:
     HttpClient() noexcept = default;
 
-    Data download(const Url& url) override;
+    void download(const Url& url) override;
 
 private:
     SocketPtr socket_;
+    HttpHeader header_;
 };

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "lib/client/http/HttpHeader.hh"
+#include "lib/client/http/header/HttpHeader.hh"
 
 #include "gtest/gtest.h"
 
@@ -16,8 +16,9 @@ TEST(HttpHeader, RequestHeader) {
 
     auto url = UrlParser(url_str).parse();
 
-    HttpHeader header(url);
-    auto request = header.build_request();
+    HttpHeader header;
+    Request req = { url.hostname, url.path };
+    auto request = header.build_request(req);
 
     ASSERT_STREQ(valid_request.c_str(), request.data());
 }

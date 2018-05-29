@@ -1,5 +1,4 @@
-#include <iostream>
-#include "lib/client/http/HttpHeader.hh"
+#include "lib/client/http/header/HttpHeader.hh"
 
 
 Buffer HttpHeader::build_request(const Request& req)
@@ -19,5 +18,5 @@ Buffer HttpHeader::build_request(const Request& req)
 
 Response HttpHeader::parse_response(const Buffer& buf)
 {
-    
+    return Response();
 }

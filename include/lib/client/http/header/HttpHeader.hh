@@ -1,8 +1,8 @@
 #pragma once
 
 #include "lib/buffer/Buffer.hh"
-#include "Request.hh"
-#include "Response.hh"
+#include "lib/client/http/Request.hh"
+#include "lib/client/http/Response.hh"
 
 
 class HttpHeader {
