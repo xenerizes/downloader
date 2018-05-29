@@ -4,7 +4,8 @@
 
 long Response::first_buffer(size_t buf_size)
 {
-    return content_length;
+    if (buf_size - header_length > content_length) return content_length;
+    return buf_size - header_length;
 }
 
 long Response::full_buffers(size_t buf_size)
@@ -17,5 +18,5 @@ long Response::full_buffers(size_t buf_size)
 long Response::last_buffer_size(size_t buf_size)
 {
     auto buffers = full_buffers(buf_size);
-    return buffers * buf_size - content_length - first_buffer(buf_size);
+    return content_length - first_buffer(buf_size) - buffers * buf_size ;
 }
