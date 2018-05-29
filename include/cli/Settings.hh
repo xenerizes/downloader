@@ -5,6 +5,8 @@
 
 
 struct Settings {
+    Settings(Url& url_, ClientPtr& cp) noexcept;
+
     Url url;
     ClientPtr client;
 };
