@@ -2,10 +2,14 @@
 
 #include <fstream>
 
-void Writer::write(const Data& data)
+Writer::Writer(std::string filename) : filename_(std::move(filename))
 {
-    std::ofstream file;
-    file.open(data.filename());
-    file.write(data.access(), data.size());
-    file.close();
+    file_.open(filename_);
 }
+
+void Writer::write(const Buffer& data)
+{
+    file_.write(data.data(), data.size());
+}
+
+Writer::~Writer() { file_.close(); }

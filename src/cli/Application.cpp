@@ -6,7 +6,5 @@
 
 void Application::run(const Settings& settings)
 {
-    Writer writer;
-    auto&& data = settings.client->download(settings.url);
-    writer.write(data);
+    settings.client->download(settings.url);
 }
