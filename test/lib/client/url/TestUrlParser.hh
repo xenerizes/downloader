@@ -14,7 +14,6 @@ TEST(UrlParser, ParseValidUrl) {
 
     ASSERT_STREQ(url.path.c_str(), "/rfc/rfc793.txt");
     ASSERT_STREQ("tools.ietf.org", url.hostname.c_str());
-    ASSERT_STREQ("http", url.scheme.c_str());
     ASSERT_EQ("80", url.port);
 }
 

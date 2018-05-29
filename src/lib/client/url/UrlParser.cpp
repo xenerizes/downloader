@@ -24,13 +24,15 @@ bool UrlParser::starts_with(const std::string& prefix) {
 
 }
 
-std::string UrlParser::extract_scheme()
+Scheme UrlParser::extract_scheme()
 {
     idx_ = url_str_.find(COLON_DELIM);
     if (idx_ == std::string::npos) {
         throw std::invalid_argument("Input URL is too short");
     }
-    return url_str_.substr(0, idx_);
+
+    auto scheme_str = url_str_.substr(0, idx_);
+    return Scheme(scheme_str);
 }
 
 std::string UrlParser::extract_hostname() {

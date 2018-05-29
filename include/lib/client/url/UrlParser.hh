@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Url.hh"
+#include "Scheme.hh"
 
 
 class UrlParser {
@@ -13,7 +14,7 @@ private:
     std::string url_str_;
     size_t idx_;
 
-    std::string extract_scheme();
+    Scheme extract_scheme();
     std::string extract_hostname();
     std::string extract_port();
     std::string extract_path();

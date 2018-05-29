@@ -4,6 +4,7 @@
 
 #include <memory>
 
+struct Url;
 
 class Client {
 public:

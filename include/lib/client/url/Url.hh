@@ -1,10 +1,12 @@
 #pragma once
 
+#include "Scheme.hh"
+
 #include <string>
 
 
 struct Url {
-    std::string scheme;
+    Scheme scheme;
     std::string hostname;
     std::string port;
     std::string path;
