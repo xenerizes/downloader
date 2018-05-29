@@ -9,11 +9,10 @@ namespace test {
 
 TEST(UrlParser, ParseValidUrl) {
     const char* url_str = "http://tools.ietf.org/rfc/rfc793.txt";
-    UrlParser parser;
 
-    auto url = parser.parse(url_str);
+    auto url = UrlParser(url_str).parse();
 
-    ASSERT_STREQ(url_str, url.path.c_str());
+    ASSERT_STREQ(url_str, "/rfc/rfc793.txt");
     ASSERT_STREQ("tools.ietf.org", url.hostname.c_str());
     ASSERT_EQ("80", url.port);
 }
@@ -23,30 +22,37 @@ TEST(UrlParser, ParseInvalidUrl) {
     const char* url_str_2 = "http://";
     const char* url_str_3 = "tools.ietf.org/rfc/rfc793.txt";
 
-    UrlParser parser;
-
     ASSERT_THROW({
-        auto url = parser.parse(url_str_1);
+        auto url = UrlParser(url_str_1).parse();
     }, std::invalid_argument);
 
     ASSERT_THROW({
-        auto url = parser.parse(url_str_2);
+        auto url = UrlParser(url_str_2).parse();
     }, std::invalid_argument);
 
     ASSERT_THROW({
-        auto url = parser.parse(url_str_3);
+        auto url = UrlParser(url_str_3).parse();
     }, std::invalid_argument);
 }
 
 TEST(UrlParser, ParseSite) {
     const char* url_str = "http://tools.ietf.org";
-    UrlParser parser;
 
-    auto url = parser.parse(url_str);
+    auto url = UrlParser(url_str).parse();
 
-    ASSERT_STREQ(url_str, url.path.c_str());
+    ASSERT_STREQ(url_str, "/");
     ASSERT_STREQ("tools.ietf.org", url.hostname.c_str());
     ASSERT_EQ("80", url.port);
+}
+
+TEST(UrlParser, ParseSpecificPort) {
+    const char* url_str = "http://tools.ietf.org:8000";
+
+    auto url = UrlParser(url_str).parse();
+
+    ASSERT_STREQ(url_str, "/");
+    ASSERT_STREQ("tools.ietf.org", url.hostname.c_str());
+    ASSERT_EQ("8000", url.port);
 }
 
 }

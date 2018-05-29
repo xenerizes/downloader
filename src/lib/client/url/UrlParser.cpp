@@ -5,7 +5,8 @@
 
 
 constexpr const char* SCHEME_DELIM = "://";
-constexpr const char HOSTNAME_DELIM = '/';
+constexpr const char PORT_DELIM = '/';
+constexpr const char HOSTNAME_DELIM = ':';
 
 namespace util {
 
@@ -44,11 +45,15 @@ namespace util {
     }
 }
 
+UrlParser::UrlParser(std::string url_str)
+    : url_str_(std::move(url_str))
+    , idx_(0)
+{ }
 
-Url UrlParser::parse(std::string url_str)
+Url UrlParser::parse()
 {
-    auto&& hostname = util::extract_hostname(url_str, "http");
-    return Url { std::move(url_str),
+    auto&& hostname = util::extract_hostname(url_str_, "http");
+    return Url { std::move(url_str_),
                  hostname,
                  "80" };
 }
