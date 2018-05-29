@@ -17,4 +17,6 @@ private:
     std::string extract_hostname();
     std::string extract_port();
     std::string extract_path();
+
+    bool starts_with(const std::string& prefix);
 };

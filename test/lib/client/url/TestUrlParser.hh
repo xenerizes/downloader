@@ -12,8 +12,9 @@ TEST(UrlParser, ParseValidUrl) {
 
     auto url = UrlParser(url_str).parse();
 
-    ASSERT_STREQ(url_str, "/rfc/rfc793.txt");
+    ASSERT_STREQ(url.path.c_str(), "/rfc/rfc793.txt");
     ASSERT_STREQ("tools.ietf.org", url.hostname.c_str());
+    ASSERT_STREQ("http", url.scheme.c_str());
     ASSERT_EQ("80", url.port);
 }
 
@@ -40,17 +41,17 @@ TEST(UrlParser, ParseSite) {
 
     auto url = UrlParser(url_str).parse();
 
-    ASSERT_STREQ(url_str, "/");
+    ASSERT_STREQ(url.path.c_str(), "/");
     ASSERT_STREQ("tools.ietf.org", url.hostname.c_str());
     ASSERT_EQ("80", url.port);
 }
 
 TEST(UrlParser, ParseSpecificPort) {
-    const char* url_str = "http://tools.ietf.org:8000";
+    const char* url_str = "http://tools.ietf.org:8000/";
 
     auto url = UrlParser(url_str).parse();
 
-    ASSERT_STREQ(url_str, "/");
+    ASSERT_STREQ(url.path.c_str(), "/");
     ASSERT_STREQ("tools.ietf.org", url.hostname.c_str());
     ASSERT_EQ("8000", url.port);
 }
