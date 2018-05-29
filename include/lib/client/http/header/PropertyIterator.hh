@@ -16,5 +16,5 @@ private:
     Line getline();
     HeaderPropertyPtr make_property(const Line& line);
 
-    size_t end_of_prefix(const Line& l, const char* prefix);
+    bool starts_with(const Line& l, const char* prefix);
 };

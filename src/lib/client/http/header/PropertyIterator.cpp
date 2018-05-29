@@ -4,7 +4,7 @@
 #include <cstring>
 
 
-constexpr const char CARRIAGE_RETURN = '\r';
+constexpr const char CARRIAGE_RET = '\r';
 constexpr const char NEWLINE = '\n';
 
 constexpr const char* HTTP_1_1_PROPERTY = "HTTP/1.1 ";
@@ -16,10 +16,11 @@ PropertyIterator::PropertyIterator(const Buffer& buf) : buf_(buf), pos_(0) { }
 
 HeaderPropertyPtr PropertyIterator::next()
 {
-    auto line = getline();
     HeaderPropertyPtr next_prop;
+    Line line;
 
     do {
+        line = getline();
         next_prop = make_property(line);
     } while (next_prop->type == PropertyType::EMPTY && line != Line(0, 0));
 
@@ -31,11 +32,11 @@ size_t PropertyIterator::raw_pos() { return pos_; }
 Line PropertyIterator::getline()
 {
     size_t start = pos_;
-    // FIXME: search for full delim
-    size_t end = buf_.find(CARRIAGE_RETURN, start);
-    if (end != std::string::npos) {
-        pos_ = end + 2;
-        return Line(start, end);
+    for (size_t i = buf_.find(CARRIAGE_RET, pos_); start < BUFFER_SIZE; ) {
+        if (buf_.data()[i + 1] == NEWLINE) {
+            pos_ = i + 2;
+            return Line(start, i - 1);
+        }
     }
 
     return Line(0, 0);
@@ -43,30 +44,33 @@ Line PropertyIterator::getline()
 
 HeaderPropertyPtr PropertyIterator::make_property(const Line& line)
 {
-    size_t start;
     if (line.first == 0) {
-        start = end_of_prefix(line, HTTP_1_1_PROPERTY);
-        if (start == line.first) {
+        if (!starts_with(line, HTTP_1_1_PROPERTY)) {
             throw std::runtime_error("Unsupported response protocol");
         }
+        auto start = line.first + strlen(HTTP_1_1_PROPERTY);
         return std::make_unique<CodeProperty>(Line(start, line.second), buf_);
     }
 
-    start = end_of_prefix(line, CONTENT_LENGTH_PROPERTY);
-    if (start != line.first) {
-        return std::make_unique<ContentLengthProperty>(Line(start, line.second),
-                                                       buf_);
+    if (starts_with(line, CONTENT_LENGTH_PROPERTY)) {
+        auto start = line.first + strlen(CONTENT_LENGTH_PROPERTY);
+        return std::make_unique<ContentLengthProperty>(Line(start, line.second), buf_);
     }
 
-    start = end_of_prefix(line, TRANSFER_ENCODING_PROPERTY);
-    if (start != line.first) {
+    if (starts_with(line, TRANSFER_ENCODING_PROPERTY)) {
         throw std::runtime_error("Transfer encoding is not supported");
     }
 
     return std::make_unique<EmptyProperty>(buf_);
 }
 
-size_t PropertyIterator::end_of_prefix(const Line& l, const char* prefix)
+bool PropertyIterator::starts_with(const Line& l, const char* prefix)
 {
-    return l.first;
+    auto len = strlen(prefix);
+    for (size_t i = l.first; i < l.first + len; i++) {
+        if (i >= l.second || buf_.data()[i] != prefix[i]) {
+            return false;
+        }
+    }
+    return true;
 }
