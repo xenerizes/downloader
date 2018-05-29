@@ -31,5 +31,5 @@ Line PropertyIterator::getline()
 
 HeaderProperty PropertyIterator::make_property(const Line& line)
 {
-    return HeaderProperty(line, line);
+    return HeaderProperty(PropertyType::EMPTY, line);
 }
