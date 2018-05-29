@@ -2,6 +2,17 @@
 
 #include "lib/writer/Writer.hh"
 
+#include <cmath>
+
+
+namespace util {
+
+long buffers(size_t content_length, size_t buf_size)
+{
+    return std::ceil(content_length / buf_size);
+}
+
+}
 
 void HttpClient::download(const Url& url) {
     socket_ = std::make_unique<Socket>(url.hostname, url.port);
@@ -16,7 +27,8 @@ void HttpClient::download(const Url& url) {
     }
 
     Writer writer(url.filename);
-    size_t buffers = 1;
+    auto buffers = util::buffers(resp.content_length, BUFFER_SIZE);
+
     for (int i = 0; i < buffers; ++i) {
         buf = socket_->read_data();
         writer.write(buf);
