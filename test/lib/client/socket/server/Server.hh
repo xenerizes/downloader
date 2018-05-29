@@ -38,7 +38,7 @@ public:
                               (void*) buf.data(),
                               buf.max_size(),
                               RECV_FLAGS);
-            send(accept_descr_, reply.data(), reply.size(), SEND_FLAGS);
+            send(accept_descr_, reply.data(), BUFFER_SIZE, SEND_FLAGS);
         } while (byte_count > 0);
 
         close(accept_descr_);

@@ -43,7 +43,7 @@ void Socket::make_connection()
 
 void Socket::send_data(const Buffer& data)
 {
-    send(descr_, data.data(), data.size(), SEND_FLAGS);
+    send(descr_, data.data(), BUFFER_SIZE, SEND_FLAGS);
 }
 
 Buffer Socket::read_data()

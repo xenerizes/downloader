@@ -11,7 +11,6 @@ public:
 
     char* data();
     const char* data() const;
-    size_t size() const;
     size_t max_size() const;
     size_t find(char c, size_t pos) const;
 
