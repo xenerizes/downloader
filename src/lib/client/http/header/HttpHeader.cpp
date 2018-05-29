@@ -1,5 +1,6 @@
 #include "lib/client/http/HttpHeader.hh"
 
+#include "lib/client/http/header/PropertyIterator.hh"
 
 Buffer HttpHeader::build_request(const Request& req)
 {
@@ -14,5 +15,16 @@ Buffer HttpHeader::build_request(const Request& req)
 
 Response HttpHeader::parse_response(const Buffer& buf)
 {
-    return Response();
+    PropertyIterator iterator(buf);
+    Response resp;
+
+    for (auto prop = iterator.next();
+         !(prop->type == PropertyType::EMPTY);
+         prop = iterator.next()) {
+
+        prop->append(resp);
+    }
+
+    resp.header_length = iterator.raw_pos();
+    return resp;
 }
