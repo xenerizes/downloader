@@ -69,7 +69,7 @@ TEST(HttpHeader, ResponseHeaderFail) {
     auto resp = header.parse_response(buf);
 
     ASSERT_EQ(resp.success, false);
-    ASSERT_STREQ(resp.code.c_str(), "400 Not Found");
+    ASSERT_STREQ(resp.code.c_str(), "404 Not Found");
     ASSERT_EQ(resp.content_length, 178);
     ASSERT_EQ(resp.header_length, 47);
 }
