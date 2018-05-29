@@ -3,6 +3,7 @@
 #include "lib/client/url/UrlParser.hh"
 
 #include "gtest/gtest.h"
+#include <vector>
 
 
 namespace test {
@@ -18,21 +19,23 @@ TEST(UrlParser, ParseValidUrl) {
 }
 
 TEST(UrlParser, ParseInvalidUrl) {
-    const char* url_str_1 = "https://tools.ietf.org/rfc/rfc793.txt";
-    const char* url_str_2 = "http://";
-    const char* url_str_3 = "tools.ietf.org/rfc/rfc793.txt";
+    std::vector<std::string> urls = {"https://tools.ietf.org/rfc/rfc793.txt",
+                                     "http://",
+                                     "tools.ietf.org/rfc/rfc793.txt",
+                                     "h",
+                                     "http:/",
+                                     "http",
+                                     "",
+                                     " ",
+                                     "/"
+                                     "http:///",
+                                     "http://:/" };
 
-    ASSERT_THROW({
-        auto url = UrlParser(url_str_1).parse();
-    }, std::invalid_argument);
-
-    ASSERT_THROW({
-        auto url = UrlParser(url_str_2).parse();
-    }, std::invalid_argument);
-
-    ASSERT_THROW({
-        auto url = UrlParser(url_str_3).parse();
-    }, std::invalid_argument);
+    for (const auto& url_str: urls) {
+        ASSERT_THROW({
+            auto url = UrlParser(url_str).parse();
+        }, std::invalid_argument);
+    }
 }
 
 TEST(UrlParser, ParseSite) {
