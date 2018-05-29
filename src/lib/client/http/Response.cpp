@@ -9,8 +9,7 @@ long Response::first_buffer(size_t buf_size)
 
 long Response::full_buffers(size_t buf_size)
 {
-    auto first_buffer = first_buffer(buf_size);
-    return std::trunc((content_length - first_buffer) / buf_size);
+    return std::trunc((content_length - first_buffer(buf_size)) / buf_size);
 }
 
 long Response::last_buffer_size(size_t buf_size)
