@@ -1,6 +1,6 @@
 #pragma once
 
-#include "lib/data/Buffer.hh"
+#include "lib/buffer/Buffer.hh"
 
 #include <unistd.h>
 #include <sys/socket.h>
