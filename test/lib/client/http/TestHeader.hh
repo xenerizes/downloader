@@ -45,7 +45,6 @@ TEST(HttpHeader, ResponseHeaderOK) {
 
     ASSERT_EQ(resp.success, true);
     ASSERT_STREQ(resp.code.c_str(), "200 OK");
-    ASSERT_STREQ(resp.filename.c_str(), "");
     ASSERT_EQ(resp.content_length, 21);
     ASSERT_EQ(resp.header_length, 247);
 }
@@ -71,7 +70,6 @@ TEST(HttpHeader, ResponseHeaderFail) {
 
     ASSERT_EQ(resp.success, false);
     ASSERT_STREQ(resp.code.c_str(), "400 Not Found");
-    ASSERT_STREQ(resp.filename.c_str(), "");
     ASSERT_EQ(resp.content_length, 178);
     ASSERT_EQ(resp.header_length, 47);
 }

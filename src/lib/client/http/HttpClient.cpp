@@ -1,10 +1,6 @@
 #include "lib/client/http/HttpClient.hh"
 
-#include "lib/client/http/header/HttpHeader.hh"
 #include "lib/writer/Writer.hh"
-
-#include <iostream>
-#include <cstring>
 
 
 void HttpClient::download(const Url& url) {
@@ -19,7 +15,7 @@ void HttpClient::download(const Url& url) {
         throw std::runtime_error("HTTP error: " + resp.code);
     }
 
-    Writer writer(resp.filename);
+    Writer writer(url.filename);
     size_t buffers = 1;
     for (int i = 0; i < buffers; ++i) {
         buf = socket_->read_data();
