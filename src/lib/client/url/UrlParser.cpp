@@ -78,8 +78,9 @@ std::string UrlParser::extract_path()
 std::string UrlParser::extract_filename()
 {
     auto delim_pos = url_str_.rfind(SLASH_DELIM);
-    if (delim_pos <= idx_) return HTML_DEFAULT_NAME;
-    return url_str_.substr(delim_pos + 1);
+    auto res = url_str_.substr(++delim_pos);
+    if (res.empty() || delim_pos < idx_) return HTML_DEFAULT_NAME;
+    return res;
 }
 
 UrlParser::UrlParser(std::string url_str) : url_str_(std::move(url_str)) { }
