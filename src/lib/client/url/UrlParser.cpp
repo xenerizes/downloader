@@ -6,7 +6,7 @@ constexpr const char* DEFAULT_PORT = "80";
 constexpr const char* SCHEME_DELIM = "://";
 constexpr const char* SLASH_DELIM = "/";
 constexpr const char* COLON_DELIM = ":";
-constexpr const char* HTML_EXTENSION = ".html";
+constexpr const char* HTML_DEFAULT_NAME = "index.html";
 
 
 bool UrlParser::starts_with(const std::string& prefix) {
@@ -78,8 +78,8 @@ std::string UrlParser::extract_path()
 std::string UrlParser::extract_filename()
 {
     auto delim_pos = url_str_.rfind(SLASH_DELIM);
-    if (delim_pos < idx_) return url_str_.substr(delim_pos) + HTML_EXTENSION;
-    return url_str_.substr(delim_pos);
+    if (delim_pos <= idx_) return HTML_DEFAULT_NAME;
+    return url_str_.substr(delim_pos + 1);
 }
 
 UrlParser::UrlParser(std::string url_str) : url_str_(std::move(url_str)) { }

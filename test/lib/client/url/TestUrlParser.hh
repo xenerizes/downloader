@@ -15,6 +15,7 @@ TEST(UrlParser, ParseValidUrl) {
 
     ASSERT_STREQ(url.path.c_str(), "/rfc/rfc793.txt");
     ASSERT_STREQ("tools.ietf.org", url.hostname.c_str());
+    ASSERT_STREQ("rfc793.txt", url.filename.c_str());
     ASSERT_EQ("80", url.port);
 }
 
@@ -45,6 +46,7 @@ TEST(UrlParser, ParseSite) {
 
     ASSERT_STREQ(url.path.c_str(), "/");
     ASSERT_STREQ("tools.ietf.org", url.hostname.c_str());
+    ASSERT_STREQ("index.html", url.filename.c_str());
     ASSERT_EQ("80", url.port);
 }
 
@@ -55,6 +57,7 @@ TEST(UrlParser, ParseSpecificPort) {
 
     ASSERT_STREQ(url.path.c_str(), "/");
     ASSERT_STREQ("tools.ietf.org", url.hostname.c_str());
+    ASSERT_STREQ("index.html", url.filename.c_str());
     ASSERT_EQ("8000", url.port);
 }
 
