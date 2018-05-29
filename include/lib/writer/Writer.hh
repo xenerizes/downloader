@@ -1,6 +1,6 @@
 #pragma once
 
-#include "lib/data/Data.hh"
+#include "lib/buffer/Buffer.hh"
 
 #include <string>
 #include <fstream>

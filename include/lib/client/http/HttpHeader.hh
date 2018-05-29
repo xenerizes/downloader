@@ -1,7 +1,7 @@
 #pragma once
 
 #include "lib/client/url/Url.hh"
-#include "lib/data/Buffer.hh"
+#include "lib/buffer/Buffer.hh"
 
 class HttpHeader {
 public:
