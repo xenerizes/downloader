@@ -12,6 +12,7 @@ public:
     ~Writer();
 
     void write(const Buffer& data);
+    void write(const char* data, size_t len);
 
 private:
     std::string filename_;
