@@ -8,7 +8,10 @@ size_t Data::size() const { return data_.size(); }
 
 void Data::append(const Buffer& buf)
 {
-    data_.insert(data_.end(), buf.begin(), buf.end());
+    const char* p = buf.data();
+    for (size_t i = 0; i < buf.size(); ++i) {
+        data_.emplace_back(*(p + i));
+    }
 }
 
 const char* Data::access() const { return data_.data(); }
