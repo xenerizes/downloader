@@ -10,4 +10,5 @@ struct Url {
     std::string hostname;
     std::string port;
     std::string path;
+    std::string filename;
 };
