@@ -46,9 +46,14 @@ std::string UrlParser::extract_hostname() {
         hostname_end = url_str_.find(SLASH_DELIM, hostname_start);
     }
 
+    auto result = url_str_.substr(hostname_start, hostname_end - hostname_start);
+    if (result == "") {
+        throw std::invalid_argument("Bad URL format: empty hostname");
+    }
+
     idx_ = hostname_end == std::string::npos ? url_str_.size() : hostname_end;
 
-    return url_str_.substr(hostname_start, hostname_end - hostname_start);
+    return result;
 }
 
 std::string UrlParser::extract_port()
