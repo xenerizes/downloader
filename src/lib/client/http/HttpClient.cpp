@@ -26,8 +26,10 @@ void HttpClient::download(const Url& url) {
         throw std::runtime_error("HTTP error: " + resp.code);
     }
 
-    Writer writer(url.filename);
     auto buffers = util::buffers(resp.content_length, BUFFER_SIZE);
+
+    Writer writer(url.filename);
+    writer.write(buf.data() + resp.header_length, BUFFER_SIZE - resp.header_length);
 
     for (int i = 0; i < buffers; ++i) {
         buf = socket_->read_data();
