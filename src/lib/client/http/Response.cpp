@@ -4,12 +4,14 @@
 
 long Response::first_buffer(size_t buf_size)
 {
-    return buf_size - header_length;
+    return content_length;
 }
 
 long Response::full_buffers(size_t buf_size)
 {
-    return std::trunc((content_length - first_buffer(buf_size)) / buf_size);
+    long tail_len = (content_length - first_buffer(buf_size));
+    if (tail_len > 0) return std::trunc(tail_len / buf_size);
+    else return 0;
 }
 
 long Response::last_buffer_size(size_t buf_size)
