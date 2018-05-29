@@ -31,7 +31,7 @@ size_t PropertyIterator::raw_pos() { return pos_; }
 Line PropertyIterator::getline()
 {
     size_t start = pos_;
-    for (size_t i = buf_.find(CARRIAGE_RET, pos_); start < BUFFER_SIZE; ) {
+    for (size_t i = buf_.find(CARRIAGE_RET, pos_); i < BUFFER_SIZE; ) {
         if (buf_.data()[i + 1] == NEWLINE) {
             pos_ = i + 2;
             if (start == i) break;
@@ -48,12 +48,11 @@ HeaderPropertyPtr PropertyIterator::make_property(const Line& line)
         if (!starts_with(line, HTTP_1_1_PROPERTY)) {
             throw std::runtime_error("Unsupported response protocol");
         }
-        auto start = line.first + strlen(HTTP_1_1_PROPERTY) - 1;
+        auto start = line.first + strlen(HTTP_1_1_PROPERTY);
         return std::make_unique<CodeProperty>(Line(start, line.second), buf_);
     }
 
     if (line.first != line.second) {
-
         if (starts_with(line, CONTENT_LENGTH_PROPERTY)) {
             auto start = line.first + strlen(CONTENT_LENGTH_PROPERTY);
             return std::make_unique<ContentLengthProperty>(
