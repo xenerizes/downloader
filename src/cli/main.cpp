@@ -4,16 +4,22 @@
 #include "lib/client/socket/Socket.hh"
 #include <exception>
 
-
-int main(int argc, char** argv) {
+int main(int argc, char **argv)
+{
     ArgumentParser parser;
     Application app;
     Logger log;
-    //SocketPtr socket = std::make_shared<Socket>("google.com", "80");
-    try {
-        auto&& settings = parser.parse_args(argc, argv, nullptr);
+    
+    try
+    {
+        auto &&url = parser.parse_args(argc, argv, nullptr);
+        SocketPtr socket = std::make_shared<Socket>(url.hostname, url.port);
+        auto &&client_ptr = url.scheme.make_client(socket);
+        Settings settings(url, client_ptr);
         app.run(settings);
-    } catch (const std::exception& err) {
+    }
+    catch (const std::exception &err)
+    {
         log.error(err.what());
         return 1;
     }

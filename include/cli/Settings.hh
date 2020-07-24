@@ -14,5 +14,5 @@ struct Settings {
 
 class ArgumentParser {
 public:
-    Settings parse_args(int argc, char** argv, SocketPtr socket);
+    Url parse_args(int argc, char** argv, SocketPtr socket);
 };
