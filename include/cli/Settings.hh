@@ -1,5 +1,5 @@
 #pragma once
-
+#include "lib/client/socket/Socket.hh"
 #include "lib/client/url/Url.hh"
 #include "lib/client/Client.hh"
 
@@ -14,5 +14,5 @@ struct Settings {
 
 class ArgumentParser {
 public:
-    Settings parse_args(int argc, char** argv);
+    Url parse_args(int argc, char** argv, SocketPtr socket);
 };

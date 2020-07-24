@@ -1,6 +1,6 @@
 #pragma once
 
-#include "lib/client/url/Url.hh"
+//#include "lib/client/url/Url.hh"
 #include "lib/buffer/Buffer.hh"
 #include "AddrInfo.hh"
 
@@ -8,10 +8,10 @@
 class Socket {
 public:
     Socket(std::string hostname, std::string port);
-    ~Socket();
+    virtual ~Socket();
 
-    void send_data(const Buffer& data);
-    Buffer read_data();
+    virtual void send_data(const Buffer& data);
+    virtual Buffer read_data();
 
 private:
     int descr_;
@@ -19,7 +19,7 @@ private:
     std::string port_;
     AddrInfo info_;
 
-    void make_connection();
+    virtual void make_connection();
 };
 
-using SocketPtr = std::unique_ptr<Socket>;
+using SocketPtr = std::shared_ptr<Socket>;
