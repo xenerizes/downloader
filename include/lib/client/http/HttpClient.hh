@@ -9,7 +9,9 @@
 class HttpClient: public Client {
 public:
     HttpClient() noexcept = default;
-
+    HttpClient(SocketPtr socket) {
+        socket_ = socket;
+    }
     void download(const Url& url) override;
 
 private:

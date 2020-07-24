@@ -6,7 +6,8 @@
 
 
 void HttpClient::download(const Url& url) {
-    socket_ = std::make_unique<Socket>(url.hostname, url.port);
+    if (!socket_)
+        socket_ = std::make_shared<Socket>(url.hostname, url.port);
     auto req = Request { url.hostname, url.path };
 
     socket_->send_data(header_.build_request(req));
