@@ -39,4 +39,19 @@ TEST(Writer, WriteStr) {
     std::remove(filename);
 }
 
+TEST(Writer, WriteBuf) {
+    auto filename = "temp-file.txt";
+    std::string data = "rnd string\nto be written";
+
+    Buffer buf;
+    buf.append(data);
+
+    Writer wr(filename);
+    wr.write(buf);
+
+    EXPECT_TRUE(helpers::file_equals(data, filename));
+
+    std::remove(filename);
+}
+
 } // namespace test

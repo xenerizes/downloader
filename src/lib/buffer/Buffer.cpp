@@ -9,6 +9,7 @@ Buffer::Buffer(size_t size)
 
 char* Buffer::data() { return data_.data(); }
 const char* Buffer::data() const { return data_.data(); }
+size_t Buffer::size() const { return size_; }
 
 size_t Buffer::find(char c, size_t pos) const
 {

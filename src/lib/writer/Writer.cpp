@@ -12,7 +12,7 @@ Writer::Writer(std::string filename) : filename_(std::move(filename))
 
 void Writer::write(const Buffer& data)
 {
-    file_.write(data.data(), BUFFER_SIZE);
+    file_.write(data.data(), data.size());
     file_.flush();
 }
 

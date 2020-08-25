@@ -12,6 +12,7 @@ public:
     char* data();
     const char* data() const;
     size_t find(char c, size_t pos) const;
+    size_t size() const;
 
     void append(const std::string& data);
 
