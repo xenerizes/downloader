@@ -22,4 +22,10 @@ void Writer::write(const char* data, size_t len)
     file_.flush();
 }
 
+void Writer::reset()
+{
+    file_.close();
+    file_.open(filename_);
+}
+
 Writer::~Writer() { file_.close(); }

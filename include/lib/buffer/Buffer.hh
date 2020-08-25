@@ -14,6 +14,7 @@ public:
     size_t find(char c, size_t pos) const;
     size_t size() const;
 
+    void clear();
     void append(const std::string& data);
 
 private:

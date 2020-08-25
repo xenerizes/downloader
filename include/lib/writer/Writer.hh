@@ -13,6 +13,7 @@ public:
 
     void write(const Buffer& data);
     void write(const char* data, size_t len);
+    void reset();
 
 private:
     std::string filename_;

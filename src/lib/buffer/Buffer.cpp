@@ -1,3 +1,4 @@
+#include <cstring>
 #include "lib/buffer/Buffer.hh"
 
 
@@ -20,6 +21,12 @@ size_t Buffer::find(char c, size_t pos) const
     }
 
     return std::string::npos;
+}
+
+void Buffer::clear()
+{
+    size_ = 0;
+    std::memset(data_.data(), 0, sizeof(char));
 }
 
 void Buffer::append(const std::string& data)
