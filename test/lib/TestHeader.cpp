@@ -1,8 +1,7 @@
-#pragma once
+#include "gtest/gtest.h"
 
 #include "lib/client/http/HttpHeader.hh"
-
-#include "gtest/gtest.h"
+#include "lib/client/url/UrlParser.hh"
 
 
 TEST(HttpHeader, RequestHeader) {

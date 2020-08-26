@@ -1,9 +1,7 @@
-#pragma once
-
-#include "lib/client/url/UrlParser.hh"
+#include <vector>
 
 #include "gtest/gtest.h"
-#include <vector>
+#include "lib/client/url/UrlParser.hh"
 
 
 namespace test {
