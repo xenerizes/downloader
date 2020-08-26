@@ -34,4 +34,23 @@ TEST(Buffer, AppendLarge) {
     EXPECT_EQ(buf.size(), 5);
 }
 
+TEST(Buffer, Find) {
+    Buffer buf;
+
+    EXPECT_EQ(std::string::npos, buf.find('7', 0));
+    EXPECT_EQ(std::string::npos, buf.find('7', 5));
+    EXPECT_EQ(std::string::npos, buf.find('7', 2048));
+
+    buf.append("rnd.test\nstring\t\t!");
+    EXPECT_EQ(std::string::npos, buf.find('7', 0));
+    EXPECT_EQ(std::string::npos, buf.find('7', 5));
+    EXPECT_EQ(std::string::npos, buf.find('7', 2048));
+    EXPECT_EQ(std::string::npos, buf.find('r', 2048));
+    EXPECT_EQ(0, buf.find('r', 0));
+    EXPECT_EQ(4, buf.find('t', 0));
+    EXPECT_EQ(4, buf.find('t', 4));
+    EXPECT_EQ(7, buf.find('t', 5));
+    EXPECT_EQ(8, buf.find('\n', 2));
+}
+
 } // test
