@@ -26,4 +26,12 @@ TEST(Buffer, Append) {
     EXPECT_EQ(buf.size(), str_2.length());
 }
 
+TEST(Buffer, AppendLarge) {
+    Buffer buf(5);
+
+    buf.append("short string");
+    EXPECT_STREQ(buf.data(), "short");
+    EXPECT_EQ(buf.size(), 5);
+}
+
 } // test
