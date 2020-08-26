@@ -26,7 +26,7 @@ TEST(UrlParser, ParseInvalidUrl) {
                                      "http",
                                      "",
                                      " ",
-                                     "/"
+                                     "/",
                                      "http:///",
                                      "http://:/" };
 
