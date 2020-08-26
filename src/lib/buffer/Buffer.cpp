@@ -26,7 +26,7 @@ size_t Buffer::find(char c, size_t pos) const
 void Buffer::clear()
 {
     size_ = 0;
-    std::memset(data_.data(), 0, sizeof(char));
+    std::memset(data_.data(), 0, sizeof(char) * max_size_);
 }
 
 void Buffer::append(const std::string& data)
