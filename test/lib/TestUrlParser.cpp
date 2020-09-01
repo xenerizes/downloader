@@ -11,10 +11,10 @@ TEST(UrlParser, ParseValidUrl) {
 
     auto url = UrlParser(url_str).parse();
 
-    ASSERT_STREQ(url.path.c_str(), "/rfc/rfc793.txt");
-    ASSERT_STREQ("tools.ietf.org", url.hostname.c_str());
-    ASSERT_STREQ("rfc793.txt", url.filename.c_str());
-    ASSERT_EQ("80", url.port);
+    EXPECT_STREQ(url.path.c_str(), "/rfc/rfc793.txt");
+    EXPECT_STREQ("tools.ietf.org", url.hostname.c_str());
+    EXPECT_STREQ("rfc793.txt", url.filename.c_str());
+    EXPECT_EQ("80", url.port);
 }
 
 TEST(UrlParser, ParseInvalidUrl) {
@@ -31,7 +31,7 @@ TEST(UrlParser, ParseInvalidUrl) {
                                      "http://:/" };
 
     for (const auto& url_str: urls) {
-        ASSERT_THROW({
+        EXPECT_THROW({
             auto url = UrlParser(url_str).parse();
         }, std::invalid_argument);
     }
@@ -42,10 +42,10 @@ TEST(UrlParser, ParseSite) {
 
     auto url = UrlParser(url_str).parse();
 
-    ASSERT_STREQ(url.path.c_str(), "/");
-    ASSERT_STREQ("tools.ietf.org", url.hostname.c_str());
-    ASSERT_STREQ("index.html", url.filename.c_str());
-    ASSERT_EQ("80", url.port);
+    EXPECT_STREQ(url.path.c_str(), "/");
+    EXPECT_STREQ("tools.ietf.org", url.hostname.c_str());
+    EXPECT_STREQ("index.html", url.filename.c_str());
+    EXPECT_EQ("80", url.port);
 }
 
 TEST(UrlParser, ParseSpecificPort) {
@@ -53,10 +53,10 @@ TEST(UrlParser, ParseSpecificPort) {
 
     auto url = UrlParser(url_str).parse();
 
-    ASSERT_STREQ(url.path.c_str(), "/");
-    ASSERT_STREQ("tools.ietf.org", url.hostname.c_str());
-    ASSERT_STREQ("index.html", url.filename.c_str());
-    ASSERT_EQ("8000", url.port);
+    EXPECT_STREQ(url.path.c_str(), "/");
+    EXPECT_STREQ("tools.ietf.org", url.hostname.c_str());
+    EXPECT_STREQ("index.html", url.filename.c_str());
+    EXPECT_EQ("8000", url.port);
 }
 
 }

@@ -19,7 +19,7 @@ TEST(HttpHeader, RequestHeader) {
     Request req = { url.hostname, url.path };
     auto request = header.build_request(req);
 
-    ASSERT_STREQ(valid_request, request.data());
+    EXPECT_STREQ(valid_request, request.data());
 }
 
 TEST(HttpHeader, ResponseHeaderOK) {
@@ -42,10 +42,11 @@ TEST(HttpHeader, ResponseHeaderOK) {
     HttpHeader header;
     auto resp = header.parse_response(buf);
 
-    ASSERT_EQ(resp.success, true);
-    ASSERT_STREQ(resp.code.c_str(), "200 OK");
-    ASSERT_EQ(resp.content_length, 21);
-    ASSERT_EQ(resp.header_length, 247);
+    EXPECT_EQ(resp.success, true);
+    EXPECT_STREQ(resp.code.c_str(), "200 OK");
+    EXPECT_EQ(resp.content_length, 21);
+    EXPECT_EQ(resp.header_length, 247);
+    
 }
 
 TEST(HttpHeader, ResponseHeaderFail) {
@@ -67,8 +68,8 @@ TEST(HttpHeader, ResponseHeaderFail) {
     HttpHeader header;
     auto resp = header.parse_response(buf);
 
-    ASSERT_EQ(resp.success, false);
-    ASSERT_STREQ(resp.code.c_str(), "404 Not Found");
-    ASSERT_EQ(resp.content_length, 178);
-    ASSERT_EQ(resp.header_length, 47);
+    EXPECT_EQ(resp.success, false);
+    EXPECT_STREQ(resp.code.c_str(), "404 Not Found");
+    EXPECT_EQ(resp.content_length, 178);
+    EXPECT_EQ(resp.header_length, 47);
 }
