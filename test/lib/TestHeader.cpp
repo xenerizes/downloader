@@ -73,3 +73,60 @@ TEST(HttpHeader, ResponseHeaderFail) {
     EXPECT_EQ(resp.content_length, 178);
     EXPECT_EQ(resp.header_length, 47);
 }
+
+TEST(HttpHeader, ResponseBuffers) {
+    Response empty_resp = {
+        .success = true,
+        .code = "200 OK",
+        .content_length = 0,
+        .header_length = 370
+    };
+
+    EXPECT_EQ(empty_resp.first_buf_content_size(BUFFER_SIZE), 0);
+    EXPECT_EQ(empty_resp.full_buf_count(BUFFER_SIZE), 0);
+    EXPECT_EQ(empty_resp.last_buf_content_size(BUFFER_SIZE), 0);
+
+    Response one_buf_resp = {
+        .success = true,
+        .code = "200 OK",
+        .content_length = 150,
+        .header_length = 300
+    };
+
+    EXPECT_EQ(one_buf_resp.first_buf_content_size(BUFFER_SIZE), 150);
+    EXPECT_EQ(one_buf_resp.full_buf_count(BUFFER_SIZE), 0);
+    EXPECT_EQ(one_buf_resp.last_buf_content_size(BUFFER_SIZE), 0);
+
+    Response two_buf_resp = {
+        .success = true,
+        .code = "200 OK",
+        .content_length = 700,
+        .header_length = 324
+    };
+
+    EXPECT_EQ(two_buf_resp.first_buf_content_size(BUFFER_SIZE), 1024 - 324);
+    EXPECT_EQ(two_buf_resp.full_buf_count(BUFFER_SIZE), 0);
+    EXPECT_EQ(two_buf_resp.last_buf_content_size(BUFFER_SIZE), 0);
+
+    Response full_buf_resp = {
+        .success = true,
+        .code = "200 OK",
+        .content_length = 1024 + 724,
+        .header_length = 300
+    };
+
+    EXPECT_EQ(full_buf_resp.first_buf_content_size(BUFFER_SIZE), 1024 - 300);
+    EXPECT_EQ(full_buf_resp.full_buf_count(BUFFER_SIZE), 1);
+    EXPECT_EQ(full_buf_resp.last_buf_content_size(BUFFER_SIZE), 0);
+
+    Response large_resp = {
+        .success = true,
+        .code = "200 OK",
+        .content_length = 65537,
+        .header_length = 300
+    };
+
+    EXPECT_EQ(large_resp.first_buf_content_size(BUFFER_SIZE), 1024 - 300);
+    EXPECT_EQ(large_resp.full_buf_count(BUFFER_SIZE), 63);
+    EXPECT_EQ(large_resp.last_buf_content_size(BUFFER_SIZE), 301);
+}

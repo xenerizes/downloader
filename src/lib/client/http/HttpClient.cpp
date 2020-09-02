@@ -17,9 +17,9 @@ void HttpClient::download(const Url& url) {
         throw std::runtime_error("HTTP error: " + resp.code);
     }
 
-    auto buffers = resp.full_buffers(BUFFER_SIZE);
-    auto first_buffer = resp.first_buffer(BUFFER_SIZE);
-    auto last_buffer = resp.last_buffer_size(BUFFER_SIZE);
+    auto buffers = resp.full_buf_count(BUFFER_SIZE);
+    auto first_buffer = resp.first_buf_content_size(BUFFER_SIZE);
+    auto last_buffer = resp.last_buf_content_size(BUFFER_SIZE);
 
     Writer writer(url.filename);
     writer.write(buf.data() + resp.header_length, first_buffer);
