@@ -33,22 +33,59 @@ void Socket::make_connection()
 {
     AddrInfo info(host_, port_);
 
-    int connect_res =
-        connect(descr_, info.info->ai_addr, info.info->ai_addrlen);
+    int res = connect(descr_, info.info->ai_addr, info.info->ai_addrlen);
 
-    if (connect_res < 0) {
-        throw std::runtime_error("Error connecting to given socket");
+    if (-1 == res) {
+        throw std::runtime_error("Error connecting to the socket: " +
+                                 socket_error_str(res));
     }
 }
 
 void Socket::send_data(const Buffer& data)
 {
-    send(descr_, data.data(), BUFFER_SIZE, SEND_FLAGS);
+    auto res = send(descr_, data.data(), BUFFER_SIZE, SEND_FLAGS);
+    if (-1 == res) {
+        throw std::runtime_error("Error sending the data to server: " +
+                                 socket_error_str(res));
+    }
 }
 
 Buffer Socket::read_data()
 {
     Buffer buf;
-    recv(descr_, buf.data(), BUFFER_SIZE, RECV_FLAGS);
+    auto res = recv(descr_, buf.data(), BUFFER_SIZE, RECV_FLAGS);
+    if (-1 == res) {
+        throw std::runtime_error("Error receiving the data from server: " +
+                                 socket_error_str(res));
+    }
     return buf;
+}
+
+std::string socket_error_str(ssize_t sock_err)
+{
+    switch (sock_err) {
+        case EACCES:
+            return "Permission denied";
+        case EAFNOSUPPORT:
+            return "Address family or connection type is not supported";
+        case ECONNRESET:
+            return "Connection reset by peer";
+        case ECONNREFUSED:
+            return "Connection refused";
+        case EINTR:
+            return "Interrupted";
+        case EINVAL:
+            return "Unknown protocol or address family";
+        case EMFILE:
+        case ENFILE:
+            return "The limit on the number of open files reached";
+        case ENOBUFS:
+            return "Output queue for a network interface is full";
+        case ENOMEM:
+            return "Could not allocate memory";
+        case EPROTONOSUPPORT:
+            return "Requested protocol is not supported within domain";
+        default:
+            return "Error " + std::to_string(sock_err);
+    }
 }

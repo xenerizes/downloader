@@ -22,4 +22,6 @@ private:
     void make_connection();
 };
 
+std::string socket_error_str(ssize_t sock_err);
+
 using SocketPtr = std::unique_ptr<Socket>;
