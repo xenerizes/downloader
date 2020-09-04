@@ -77,4 +77,38 @@ TEST(Writer, WriteBuf) {
     std::remove(filename);
 }
 
+TEST(Writer, WriteFullJPG) {
+    std::fstream jpg_file("../../web/files/orchid.jpg");
+    std::stringstream ss;
+    ss << jpg_file.rdbuf();
+    std::string jpg(ss.str());
+
+    auto filename = "tmp.jpg";
+    Writer wr(filename);
+    wr.write(jpg.c_str(), jpg.length());
+    EXPECT_TRUE(helpers::file_equals(jpg, filename));
+
+    std::remove(filename);
+}
+
+TEST(Writer, WriteJPGBuffers) {
+    std::fstream jpg_file("../../web/files/orchid.jpg");
+    std::stringstream ss;
+    ss << jpg_file.rdbuf();
+    std::string jpg(ss.str());
+    Buffer buf[76];
+    for (unsigned i = 0; i < 76; ++i) {
+        buf[i].append(jpg.substr(i * BUFFER_SIZE, (i + 1) * BUFFER_SIZE));
+    }
+
+    auto filename = "tmp.jpg";
+    Writer wr(filename);
+    for (unsigned i = 0; i < 76; ++i) {
+        wr.write(buf[i]);
+    }
+    EXPECT_TRUE(helpers::file_equals(jpg, filename));
+
+    std::remove(filename);
+}
+
 } // namespace test
