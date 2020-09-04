@@ -3,3 +3,5 @@ add_executable(downloader-test ${TEST_SOURCES})
 target_link_libraries(downloader-test gtest_main lib)
 target_include_directories(downloader-test PRIVATE
     third-party/googletest/googletest/include)
+
+add_test(downloader-test downloader-test)
