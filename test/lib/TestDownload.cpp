@@ -35,4 +35,14 @@ TEST(Download, Index) {
     std::remove("index.html");
 }
 
+TEST(Download, Orchid) {
+    UrlParser parser("http://0.0.0.0:9999/files/orchid.jpg");
+    HttpClient client;
+    client.download(parser.parse());
+
+    EXPECT_TRUE(helpers::file_equals("../../web/files/orchid.jpg", "orchid.jpg"));
+
+    std::remove("orchid.jpg");
+}
+
 } // ns test

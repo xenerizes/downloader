@@ -23,6 +23,11 @@ size_t Buffer::find(char c, size_t pos) const
     return std::string::npos;
 }
 
+void Buffer::size(size_t sz)
+{
+    size_ = std::min(sz, max_size_);
+}
+
 void Buffer::clear()
 {
     size_ = 0;

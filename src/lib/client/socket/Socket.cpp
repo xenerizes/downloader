@@ -58,6 +58,7 @@ Buffer Socket::read_data()
         throw std::runtime_error("Error receiving the data from server: " +
                                  socket_error_str(res));
     }
+    buf.size(res);
     return buf;
 }
 
