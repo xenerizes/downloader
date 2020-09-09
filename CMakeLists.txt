@@ -6,9 +6,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS_RELEASE "-Wall -Wextra -O3")
 set(CMAKE_CXX_FLAGS_DEBUG "-Wall -Wextra -g -O0")
 
-add_subdirectory(src/cli)
-add_subdirectory(src/lib)
-
 if (NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Debug)
 endif()
@@ -16,6 +13,7 @@ endif()
 if (CMAKE_BUILD_TYPE MATCHES Debug)
   find_program(GCOVR_EXECUTABLE gcovr)
   if(GCOVR_EXECUTABLE)
+    message("-- Found gcovr: ${GCOVR_EXECUTABLE}")
     set(CMAKE_CXX_FLAGS_DEBUG
         "${CMAKE_CXX_FLAGS_DEBUG} -fprofile-arcs -ftest-coverage -fPIC")
     add_custom_target(cov
@@ -33,6 +31,9 @@ if (CMAKE_BUILD_TYPE MATCHES Debug)
         )
   endif()
 endif()
+
+add_subdirectory(src/cli)
+add_subdirectory(src/lib)
 
 # Tests
 enable_testing()
