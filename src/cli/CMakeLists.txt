@@ -1,6 +1,5 @@
 add_library(cli
     Application.cpp
-    Logger.cpp
     Settings.cpp
     )
 

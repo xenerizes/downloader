@@ -1,19 +1,17 @@
+#include <exception>
+#include <iostream>
+
 #include "cli/Application.hh"
 #include "cli/Settings.hh"
-#include "cli/Logger.hh"
-
-#include <exception>
-
 
 int main(int argc, char** argv) {
     ArgumentParser parser;
     Application app;
-    Logger log;
     try {
         auto&& settings = parser.parse_args(argc, argv);
         app.run(settings);
     } catch (const std::exception& err) {
-        log.error(err.what());
+        std::cerr << err.what();
         return 1;
     }
 
