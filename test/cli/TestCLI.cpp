@@ -16,7 +16,7 @@ TEST(Cli, ParseArgs) {
     EXPECT_EQ(st.url, url);
 
     const char* args_bad_1[2] = {".", "https://tools.ietf.org/rfc/rfc793.txt"};
-    const char* args_bad_2[2] = {".", "tools.ietf.org"};
+    const char* args_bad_2[2] = {".", "/tools.ietf.org"};
     const char* args_bad_3[1] = {"."};
 
     EXPECT_ANY_THROW(argparser.parse_args(2, (char**)args_bad_1));

@@ -6,6 +6,7 @@ constexpr const char* DEFAULT_PORT = "80";
 constexpr const char* SCHEME_DELIM = "://";
 constexpr const char* SLASH_DELIM = "/";
 constexpr const char* COLON_DELIM = ":";
+constexpr const char* DOT_DELIM = ".";
 constexpr const char* HTML_DEFAULT_NAME = "index.html";
 
 
@@ -23,19 +24,27 @@ Scheme Url::extract_scheme()
 {
     idx_ = url_str_.find(COLON_DELIM);
     if (idx_ == std::string::npos) {
-        throw std::invalid_argument("Input URL is too short");
+        auto dot = url_str_.find(DOT_DELIM);
+        if (dot == std::string::npos) {
+            throw std::invalid_argument("Input URL is too short");
+        } else {
+            idx_ = 0;
+            return {};
+        }
     }
 
     auto scheme_str = url_str_.substr(0, idx_);
+
+    if (!starts_with(SCHEME_DELIM)) {
+        throw std::invalid_argument("Bad URL format: unexpected scheme delim");
+    }
+    idx_ += strlen(SCHEME_DELIM);
+
     return Scheme(scheme_str);
 }
 
 std::string Url::extract_hostname() {
-    if (!starts_with(SCHEME_DELIM)) {
-        throw std::invalid_argument("Bad URL format: unexpected scheme delim");
-    }
-
-    size_t hostname_start = idx_ + strlen(SCHEME_DELIM);
+    size_t hostname_start = idx_;
     auto hostname_end = url_str_.find(COLON_DELIM, hostname_start);
     if (hostname_end == std::string::npos) {
         hostname_end = url_str_.find(SLASH_DELIM, hostname_start);
@@ -63,14 +72,16 @@ std::string Url::extract_port()
     idx_ = port_end == std::string::npos ? url_str_.size() : port_end;
 
     auto result = url_str_.substr(port_start, port_end - port_start);
-    if (result == "") throw std::invalid_argument("Bad URL format: unexpected port");
+    if (result.empty()) {
+        throw std::invalid_argument("Bad URL format: unexpected port");
+    }
 
     return result;
 }
 
 std::string Url::extract_path()
 {
-    if (!starts_with(SLASH_DELIM)) return SLASH_DELIM;
+    if (!starts_with(SLASH_DELIM)) return {};
 
     return url_str_.substr(idx_);
 }

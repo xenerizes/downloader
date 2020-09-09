@@ -2,12 +2,16 @@
 
 #include "lib/client/http/HttpClient.hh"
 
-constexpr const char* VALID_SCHEME_HTTP = "http";
+constexpr const char* SCHEME_HTTP = "http";
+
+Scheme::Scheme()
+    : scheme(SCHEME_HTTP)
+{ }
 
 Scheme::Scheme(std::string scheme_str)
     : scheme(std::move(scheme_str))
 {
-    if (scheme != VALID_SCHEME_HTTP) {
+    if (scheme != SCHEME_HTTP) {
         throw std::invalid_argument("Unsupported protocol");
     }
 }
