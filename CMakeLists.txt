@@ -22,6 +22,7 @@ if (CMAKE_BUILD_TYPE MATCHES Debug)
         --root=${PROJECT_SOURCE_DIR}
         --filter=${PROJECT_SOURCE_DIR}/include
         --filter=${PROJECT_SOURCE_DIR}/src
+        --exclude=${PROJECT_SOURCE_DIR}/src/cli/main.cpp
         --object-directory=${PROJECT_BINARY_DIR}
         --delete
         --html
