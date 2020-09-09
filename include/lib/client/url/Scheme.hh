@@ -7,7 +7,11 @@
 
 class Scheme {
 public:
-    Scheme(const std::string scheme_str);
+    explicit Scheme(std::string scheme_str);
+    bool operator==(const Scheme& oth) const;
 
     ClientPtr make_client();
+
+private:
+    std::string scheme;
 };

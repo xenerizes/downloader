@@ -5,7 +5,7 @@ add_executable(downloader-test
     lib/TestBuffer.cpp
     lib/TestDownload.cpp
     lib/TestHeader.cpp
-    lib/TestUrlParser.cpp
+    lib/TestUrl.cpp
     lib/TestWriter.cpp
     )
 

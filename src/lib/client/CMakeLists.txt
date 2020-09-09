@@ -8,7 +8,7 @@ target_link_libraries(socket buffer)
 
 add_library(client
     url/Scheme.cpp
-    url/UrlParser.cpp
+    url/Url.cpp
     http/HttpClient.cpp
     http/Response.cpp
     http/HttpHeader.cpp

@@ -1,7 +1,7 @@
 #include "gtest/gtest.h"
 
 #include "lib/client/http/HttpHeader.hh"
-#include "lib/client/url/UrlParser.hh"
+#include "lib/client/url/Url.hh"
 
 
 TEST(HttpHeader, RequestHeader) {
@@ -13,7 +13,7 @@ TEST(HttpHeader, RequestHeader) {
         "Connection: close\r\n"
         "\r\n";
 
-    auto url = UrlParser(url_str).parse();
+    auto url = Url(url_str);
 
     HttpHeader header;
     Request req = { url.hostname, url.path };

@@ -1,22 +1,33 @@
 #pragma once
 
+#include "Url.hh"
 #include "Scheme.hh"
 
-#include <string>
 
+class Url {
+private:
+    std::string url_str_; // to be initialized first
+    size_t idx_;
 
-struct Url {
+public:
+    explicit Url(std::string url_str);
+    Url(const Url&);
+    ~Url() = default;
+
+    bool operator==(const Url&rhs) const;
+
     Scheme scheme;
     std::string hostname;
     std::string port;
     std::string path;
     std::string filename;
-};
 
-inline bool operator==(const Url& lhs, const Url&rhs)
-{
-    return lhs.path == rhs.path &&
-           lhs.hostname == rhs.hostname &&
-           lhs.filename == rhs.filename &&
-           lhs.port == rhs.port;
-}
+private:
+    Scheme extract_scheme();
+    std::string extract_hostname();
+    std::string extract_port();
+    std::string extract_path();
+    std::string extract_filename();
+
+    bool starts_with(const std::string& prefix);
+};

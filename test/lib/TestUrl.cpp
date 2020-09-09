@@ -1,7 +1,7 @@
 #include <vector>
 
 #include "gtest/gtest.h"
-#include "lib/client/url/UrlParser.hh"
+#include "lib/client/url/Url.hh"
 
 
 namespace test {
@@ -9,7 +9,7 @@ namespace test {
 TEST(UrlParser, ParseValidUrl) {
     const char* url_str = "http://tools.ietf.org/rfc/rfc793.txt";
 
-    auto url = UrlParser(url_str).parse();
+    auto url = Url(url_str);
 
     EXPECT_STREQ(url.path.c_str(), "/rfc/rfc793.txt");
     EXPECT_STREQ("tools.ietf.org", url.hostname.c_str());
@@ -32,7 +32,7 @@ TEST(UrlParser, ParseInvalidUrl) {
 
     for (const auto& url_str: urls) {
         EXPECT_THROW({
-            auto url = UrlParser(url_str).parse();
+            Url url(url_str);
         }, std::invalid_argument);
     }
 }
@@ -40,7 +40,7 @@ TEST(UrlParser, ParseInvalidUrl) {
 TEST(UrlParser, ParseSite) {
     const char* url_str = "http://tools.ietf.org";
 
-    auto url = UrlParser(url_str).parse();
+    auto url = Url(url_str);
 
     EXPECT_STREQ(url.path.c_str(), "/");
     EXPECT_STREQ("tools.ietf.org", url.hostname.c_str());
@@ -51,7 +51,7 @@ TEST(UrlParser, ParseSite) {
 TEST(UrlParser, ParseSpecificPort) {
     const char* url_str = "http://tools.ietf.org:8000/";
 
-    auto url = UrlParser(url_str).parse();
+    auto url = Url(url_str);
 
     EXPECT_STREQ(url.path.c_str(), "/");
     EXPECT_STREQ("tools.ietf.org", url.hostname.c_str());

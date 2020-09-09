@@ -1,4 +1,4 @@
-#include "lib/client/url/UrlParser.hh"
+#include "lib/client/url/Url.hh"
 
 #include <cstring>
 
@@ -9,7 +9,7 @@ constexpr const char* COLON_DELIM = ":";
 constexpr const char* HTML_DEFAULT_NAME = "index.html";
 
 
-bool UrlParser::starts_with(const std::string& prefix) {
+bool Url::starts_with(const std::string& prefix) {
     if (url_str_.size() - idx_ < prefix.size()) return false;
 
     for (size_t i = 0; i < prefix.size(); ++i) {
@@ -19,7 +19,7 @@ bool UrlParser::starts_with(const std::string& prefix) {
     return true;
 }
 
-Scheme UrlParser::extract_scheme()
+Scheme Url::extract_scheme()
 {
     idx_ = url_str_.find(COLON_DELIM);
     if (idx_ == std::string::npos) {
@@ -30,7 +30,7 @@ Scheme UrlParser::extract_scheme()
     return Scheme(scheme_str);
 }
 
-std::string UrlParser::extract_hostname() {
+std::string Url::extract_hostname() {
     if (!starts_with(SCHEME_DELIM)) {
         throw std::invalid_argument("Bad URL format: unexpected scheme delim");
     }
@@ -51,7 +51,7 @@ std::string UrlParser::extract_hostname() {
     return result;
 }
 
-std::string UrlParser::extract_port()
+std::string Url::extract_port()
 {
     if (idx_ == url_str_.size() or starts_with(SLASH_DELIM) or !starts_with(COLON_DELIM)) {
         return DEFAULT_PORT;
@@ -68,14 +68,14 @@ std::string UrlParser::extract_port()
     return result;
 }
 
-std::string UrlParser::extract_path()
+std::string Url::extract_path()
 {
     if (!starts_with(SLASH_DELIM)) return SLASH_DELIM;
 
     return url_str_.substr(idx_);
 }
 
-std::string UrlParser::extract_filename()
+std::string Url::extract_filename()
 {
     auto delim_pos = url_str_.rfind(SLASH_DELIM);
     auto res = url_str_.substr(++delim_pos);
@@ -83,10 +83,29 @@ std::string UrlParser::extract_filename()
     return res;
 }
 
-UrlParser::UrlParser(std::string url_str) : url_str_(std::move(url_str)) { }
+Url::Url(std::string url_str)
+    : url_str_(std::move(url_str))
+    , idx_(0)
+    , scheme(extract_scheme())
+    , hostname(extract_hostname())
+    , port(extract_port())
+    , path(extract_path())
+    , filename(extract_filename())
+{ }
 
-Url UrlParser::parse()
+Url::Url(const Url& oth)
+    : scheme(oth.scheme)
+    , hostname(oth.hostname)
+    , port(oth.port)
+    , path(oth.path)
+    , filename(oth.filename)
+{ }
+
+bool Url::operator==(const Url& rhs) const
 {
-    return Url { extract_scheme(), extract_hostname(), extract_port(),
-                 extract_path(), extract_filename() };
+    return scheme == rhs.scheme &&
+           path == rhs.path &&
+           hostname == rhs.hostname &&
+           filename == rhs.filename &&
+           port == rhs.port;
 }

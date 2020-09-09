@@ -4,11 +4,17 @@
 
 constexpr const char* VALID_SCHEME_HTTP = "http";
 
-Scheme::Scheme(const std::string scheme_str)
+Scheme::Scheme(std::string scheme_str)
+    : scheme(std::move(scheme_str))
 {
-    if (scheme_str != VALID_SCHEME_HTTP) {
+    if (scheme != VALID_SCHEME_HTTP) {
         throw std::invalid_argument("Unsupported protocol");
     }
+}
+
+bool Scheme::operator==(const Scheme& oth) const
+{
+    return scheme == oth.scheme;
 }
 
 ClientPtr Scheme::make_client()

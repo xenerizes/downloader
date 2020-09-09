@@ -8,13 +8,7 @@ namespace test {
 TEST(Cli, ParseArgs) {
     const char* args_ok[2] = {"./downloader",
                               "http://tools.ietf.org/rfc/rfc793.txt"};
-    Url url = {
-        .scheme = Scheme("http"),
-        .hostname = "tools.ietf.org",
-        .port = "80",
-        .path = "/rfc/rfc793.txt",
-        .filename = "rfc793.txt"
-    };
+    Url url{"http://tools.ietf.org/rfc/rfc793.txt"};
 
     ArgumentParser argparser;
     Settings st = argparser.parse_args(2, (char**)args_ok);
@@ -23,13 +17,7 @@ TEST(Cli, ParseArgs) {
 }
 
 TEST(Cli, DownloadThroughApp) {
-    Url url = {
-        .scheme = Scheme("http"),
-        .hostname = "0.0.0.0",
-        .port = "9999",
-        .path = "/files/orchid.jpg",
-        .filename = "orchid.jpg"
-    };
+    Url url{"http://0.0.0.0:9999/files/orchid.jpg"};
 
     auto client = url.scheme.make_client();
     Settings st(url, client);

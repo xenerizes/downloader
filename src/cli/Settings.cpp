@@ -1,6 +1,6 @@
 #include "cli/Settings.hh"
 
-#include "lib/client/url/UrlParser.hh"
+#include "lib/client/url/Url.hh"
 
 
 Settings::Settings(Url& url_, ClientPtr& cp) noexcept
@@ -12,8 +12,7 @@ Settings::Settings(Url& url_, ClientPtr& cp) noexcept
 Settings ArgumentParser::parse_args(int argc, char** argv)
 {
     if (argc > 1) {
-        UrlParser parser(argv[1]);
-        auto&& url = parser.parse();
+        Url url(argv[1]);
         auto&& client_ptr = url.scheme.make_client();
 
         return Settings(url, client_ptr);
