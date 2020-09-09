@@ -1,6 +1,6 @@
 add_executable(downloader-test
+    cli/TestCLI.cpp
     lib/TestBuffer.cpp
-    lib/TestCLI.cpp
     lib/TestDownload.cpp
     lib/TestHeader.cpp
     lib/TestUrlParser.cpp
