@@ -14,6 +14,14 @@ TEST(Cli, ParseArgs) {
     Settings st = argparser.parse_args(2, (char**)args_ok);
     EXPECT_TRUE(st.client);
     EXPECT_EQ(st.url, url);
+
+    const char* args_bad_1[2] = {".", "https://tools.ietf.org/rfc/rfc793.txt"};
+    const char* args_bad_2[2] = {".", "tools.ietf.org"};
+    const char* args_bad_3[1] = {"."};
+
+    EXPECT_ANY_THROW(argparser.parse_args(2, (char**)args_bad_1));
+    EXPECT_ANY_THROW(argparser.parse_args(2, (char**)args_bad_2));
+    EXPECT_ANY_THROW(argparser.parse_args(1, (char**)args_bad_3));
 }
 
 TEST(Cli, DownloadThroughApp) {
