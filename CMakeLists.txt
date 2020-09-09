@@ -6,16 +6,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS_RELEASE "-Wall -Wextra -O3")
 set(CMAKE_CXX_FLAGS_DEBUG "-Wall -Wextra -g -O0")
 
-include_directories(include)
-
-file(GLOB_RECURSE CLI_SRC src/cli/*.cpp)
-add_library(cli ${CLI_SRC})
-
-file(GLOB_RECURSE LIB_SRC src/lib/*.cpp)
-add_library(lib ${LIB_SRC})
-
-add_executable(downloader-cli src/cli/main.cpp)
-target_link_libraries(downloader-cli cli lib)
+add_subdirectory(src/cli)
+add_subdirectory(src/lib)
 
 if (NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Debug)
