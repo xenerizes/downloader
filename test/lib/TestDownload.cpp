@@ -26,4 +26,19 @@ TEST(Download, Orchid) {
     std::remove("orchid.jpg");
 }
 
+TEST(Download, Errors) {
+    HttpClient client;
+
+    std::vector<std::string> bad_urls = { "file.txt",
+                                          ".",
+                                          "..",
+                                          "http.",
+                                          "http.txt" };
+
+    for (auto& url_str: bad_urls) {
+        Url url(url_str);
+        EXPECT_ANY_THROW(client.download(url)) << "\t\tUrl: " << url_str << std::endl;
+    }
+}
+
 } // ns test
