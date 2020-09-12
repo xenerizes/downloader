@@ -32,6 +32,7 @@ TEST(Download, Errors) {
     std::vector<std::string> bad_urls = { "file.txt",
                                           ".",
                                           "..",
+                                          "http",
                                           "http.",
                                           "http.txt" };
 
