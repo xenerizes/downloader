@@ -11,8 +11,6 @@ private:
 
 public:
     explicit Url(std::string url_str);
-    Url(const Url&);
-    ~Url() = default;
 
     bool operator==(const Url&rhs) const;
 
@@ -30,4 +28,5 @@ private:
     std::string extract_filename();
 
     bool starts_with(const std::string& prefix);
+    std::string strip_spaces(std::string str);
 };

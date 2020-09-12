@@ -1,6 +1,10 @@
-#include "lib/client/url/Url.hh"
-
+#include <string>
+#include <vector>
+#include <iostream>
 #include <cstring>
+#include <locale>
+
+#include "lib/client/url/Url.hh"
 
 constexpr const char* DEFAULT_PORT = "80";
 constexpr const char* SCHEME_DELIM = "://";
@@ -20,24 +24,25 @@ bool Url::starts_with(const std::string& prefix) {
     return true;
 }
 
+std::string Url::strip_spaces(std::string str)
+{
+    size_t idx{0};
+    for (; idx < str.size() && std::isspace(str[idx]); ++idx) ;
+    if (idx) str.erase(0, idx);
+    for (idx = str.size(); idx > 0 && std::isspace(str[idx - 1]); --idx) ;
+    if (idx < str.size()) str.erase(idx, str.size());
+    return str;
+}
+
 Scheme Url::extract_scheme()
 {
-    idx_ = url_str_.find(COLON_DELIM);
+    idx_ = url_str_.find(SCHEME_DELIM);
     if (idx_ == std::string::npos) {
-        auto dot = url_str_.find(DOT_DELIM);
-        if (dot == std::string::npos) {
-            throw std::invalid_argument("Input URL is too short");
-        } else {
-            idx_ = 0;
-            return {};
-        }
+        idx_ = 0;
+        return {};
     }
 
     auto scheme_str = url_str_.substr(0, idx_);
-
-    if (!starts_with(SCHEME_DELIM)) {
-        throw std::invalid_argument("Bad URL format: unexpected scheme delim");
-    }
     idx_ += strlen(SCHEME_DELIM);
 
     return Scheme(scheme_str);
@@ -95,21 +100,13 @@ std::string Url::extract_filename()
 }
 
 Url::Url(std::string url_str)
-    : url_str_(std::move(url_str))
+    : url_str_(strip_spaces(std::move(url_str)))
     , idx_(0)
     , scheme(extract_scheme())
     , hostname(extract_hostname())
     , port(extract_port())
     , path(extract_path())
     , filename(extract_filename())
-{ }
-
-Url::Url(const Url& oth)
-    : scheme(oth.scheme)
-    , hostname(oth.hostname)
-    , port(oth.port)
-    , path(oth.path)
-    , filename(oth.filename)
 { }
 
 bool Url::operator==(const Url& rhs) const

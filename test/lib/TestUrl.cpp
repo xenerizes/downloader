@@ -6,7 +6,7 @@
 
 namespace test {
 
-TEST(UrlParser, ParseValidUrl) {
+TEST(UrlParser, ParseUrl) {
     const char* url_str = "http://tools.ietf.org/rfc/rfc793.txt";
 
     auto url = Url(url_str);
@@ -33,9 +33,7 @@ TEST(UrlParser, Defaults) {
 TEST(UrlParser, ParseInvalidUrl) {
     std::vector<std::string> urls = {"https://tools.ietf.org/rfc/rfc793.txt",
                                      "http://",
-                                     "h",
                                      "http:/",
-                                     "http",
                                      "",
                                      " ",
                                      "/",
@@ -44,6 +42,26 @@ TEST(UrlParser, ParseInvalidUrl) {
 
     for (const auto& url_str: urls) {
         EXPECT_ANY_THROW({
+            Url url(url_str);
+        }) << "     Url: " << url_str << std::endl;
+    }
+}
+
+TEST(UrlParser, ParseValidUrl) {
+    std::vector<std::string> urls = {"http://tools.ietf.org/rfc/rfc793.txt",
+                                     "tools.ietf.org/rfc/rfc793.txt",
+                                     "tools.ietf.org",
+                                     "  tools.ietf.org",
+                                     "  tools.ietf.org   ",
+                                     "tools.ietf.org ",
+                                     "http",
+                                     "localhost",
+                                     "0.0.0.0",
+                                     "yandex.ru",
+                                     "server:43" };
+
+    for (const auto& url_str: urls) {
+        EXPECT_NO_THROW({
             Url url(url_str);
         }) << "     Url: " << url_str << std::endl;
     }

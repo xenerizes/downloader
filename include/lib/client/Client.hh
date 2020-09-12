@@ -3,7 +3,7 @@
 
 #include <memory>
 
-struct Url;
+class Url;
 
 class Client {
 public:

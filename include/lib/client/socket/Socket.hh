@@ -8,6 +8,7 @@
 class Socket {
 public:
     Socket(std::string hostname, std::string port);
+    Socket(const Socket& oth) = delete;
     ~Socket();
 
     void send_data(const Buffer& data);
