@@ -30,6 +30,8 @@ Full coverage report is stored in `coverage.html` in build directory.
 ### Notes
 - HTTP 1.1.
 - GNU/Linux (includes unistd.h, etc).
+- Very simple URL format.
 - File downloads iff URL format is supported and response is 200 OK.
 - Transfer encodings are not supported.
 - Error codes and unnecessary fields in response are not checked.
+- No redirections.
