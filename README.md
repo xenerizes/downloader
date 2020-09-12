@@ -18,9 +18,14 @@ If a filename can be extracted from URL, it is extracted. Otherwise, a site page
 
 ### Run tests
 
-To run the tests:
+To pass all the tests, start a nginx server before (from the project dir):
 ```sh
 sudo nginx -c $(pwd)/nginx.conf -p $(pwd)
+```
+Then, in the build dir: 
+```sh
+cmake .. -DCMAKE_BUILD_TYPE=Debug
+make
 ctest -V
 ```
 
