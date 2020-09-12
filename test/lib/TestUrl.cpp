@@ -37,6 +37,11 @@ TEST(UrlParser, ParseInvalidUrl) {
                                      "",
                                      " ",
                                      "/",
+                                     "//",
+                                     "\t",
+                                     "  \t ",
+                                     " \n\n  ",
+                                     " http://\n\n  ",
                                      "http:///",
                                      "http://:/" };
 
