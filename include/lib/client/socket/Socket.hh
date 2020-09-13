@@ -21,6 +21,7 @@ private:
     AddrInfo info_;
 
     void make_connection();
+    void close_connection();
 };
 
 std::string socket_error_str(ssize_t sock_err);

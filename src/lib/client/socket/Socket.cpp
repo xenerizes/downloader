@@ -36,15 +36,25 @@ void Socket::make_connection()
     int res = connect(descr_, info.info->ai_addr, info.info->ai_addrlen);
 
     if (-1 == res) {
+        close_connection();
         throw std::runtime_error("Error connecting to the socket: " +
                                  socket_error_str(res));
     }
+}
+
+void Socket::close_connection()
+{
+    if (descr_ > 0) {
+        close(descr_);
+    }
+    descr_ = -1;
 }
 
 void Socket::send_data(const Buffer& data)
 {
     auto res = send(descr_, data.data(), BUFFER_SIZE, SEND_FLAGS);
     if (-1 == res) {
+        close_connection();
         throw std::runtime_error("Error sending the data to server: " +
                                  socket_error_str(res));
     }
@@ -55,6 +65,7 @@ Buffer Socket::read_data()
     Buffer buf;
     auto res = recv(descr_, buf.data(), BUFFER_SIZE, RECV_FLAGS);
     if (-1 == res) {
+        close_connection();
         throw std::runtime_error("Error receiving the data from server: " +
                                  socket_error_str(res));
     }
