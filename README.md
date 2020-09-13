@@ -18,9 +18,14 @@ If a filename can be extracted from URL, it is extracted. Otherwise, a site page
 
 ### Run tests
 
-To run the tests:
+To pass all the tests, start a nginx server before (from the project dir):
 ```sh
 sudo nginx -c $(pwd)/nginx.conf -p $(pwd)
+```
+Then, in the build dir: 
+```sh
+cmake .. -DCMAKE_BUILD_TYPE=Debug
+make
 ctest -V
 ```
 
@@ -30,6 +35,8 @@ Full coverage report is stored in `coverage.html` in build directory.
 ### Notes
 - HTTP 1.1.
 - GNU/Linux (includes unistd.h, etc).
+- Very simple URL format.
 - File downloads iff URL format is supported and response is 200 OK.
 - Transfer encodings are not supported.
 - Error codes and unnecessary fields in response are not checked.
+- No redirections.
